@@ -1,14 +1,22 @@
 {
-  "name": "vite-react-component-package-starter-kit",
+  "name": "tabler-dynamic-icon",
   "private": true,
-  "version": "1.2.0",
-  "description": "A Vite + TypeScript starter kit for building and publishing React components as npm packages.",
+  "version": "1.0.0",
+  "description": "A component to render tabler-icons dynamically in React applications.",
   "author": {
     "name": "Hamid Yaftian",
     "email": "hamid.yaftian@gmail.com",
     "url": "https://github.com/hamidyfine"
   },
   "license": "MIT",
+  "keywords": [
+    "react",
+    "tabler-icons",
+    "dynamic-icons",
+    "webfont",
+    "svg",
+    "icons"
+  ],
   "type": "module",
   "files": [
     "dist"
@@ -16,6 +24,10 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -37,6 +49,7 @@
     "lint": "npm run lint:scripts && npm run lint:styles",
     "lint:scripts": "eslint . --report-unused-disable-directives --max-warnings 0 --no-warn-ignored --fix",
     "lint:styles": "stylelint src/**/*.scss",
+    "generate-icons-type": "node scripts/extract-icons-enum.js",
     "prepare": "husky",
     "release": "release-it"
   },
@@ -78,9 +91,15 @@
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.4"
   },
+  "dependencies": {
+    "@tabler/icons-react": "^3.34.1",
+    "@tabler/icons-webfont": "^3.34.1"
+  },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "@tabler/icons-react": "^3.34.1",
+    "@tabler/icons-webfont": "^3.34.1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -9,13 +9,14 @@ import { peerDependencies } from './package.json';
 
 export default defineConfig({
     build: {
+        cssCodeSplit: true,
         lib: {
             cssFileName: 'style',
             entry: resolve(__dirname, join('src', 'index.ts')),
             fileName: 'index',
             formats: ['es', 'cjs'],
         },
-        minify: false,
+        minify: true,
         rollupOptions: {
             // Exclude peer dependencies from the bundle to reduce bundle size
             external: ['react/jsx-runtime', ...Object.keys(peerDependencies)],

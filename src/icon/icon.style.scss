@@ -1,0 +1,26 @@
+.icon {
+    user-select: none;
+
+    &__box {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__animate {
+        &--spin {
+            display: inline-block;
+            animation: icon-spin 1s linear infinite;
+        }
+    }
+}
+
+@keyframes icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

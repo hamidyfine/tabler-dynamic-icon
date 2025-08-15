@@ -6,4 +6,7 @@ import storybook from 'eslint-plugin-storybook';
 export default [
     ...config,
     ...storybook.configs['flat/recommended'],
+    {
+        ignores: ['src/icon/icon.type.ts'],
+    },
 ];
