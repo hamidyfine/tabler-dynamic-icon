@@ -1,6 +1,6 @@
 {
   "name": "tabler-dynamic-icon",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
   "description": "A component to render tabler-icons dynamically in React applications.",
   "author": {
