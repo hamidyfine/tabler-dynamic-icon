@@ -7,6 +7,6 @@ export default [
     ...config,
     ...storybook.configs['flat/recommended'],
     {
-        ignores: ['src/icon/icon.type.ts'],
+        ignores: ['src/icon/icon.classes.ts', 'src/icon/icon.enums.ts'],
     },
 ];

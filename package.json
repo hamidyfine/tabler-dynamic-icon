@@ -49,7 +49,9 @@
     "lint": "npm run lint:scripts && npm run lint:styles",
     "lint:scripts": "eslint . --report-unused-disable-directives --max-warnings 0 --no-warn-ignored --fix",
     "lint:styles": "stylelint src/**/*.scss",
-    "generate-icons-type": "node scripts/extract-icons-enum.js",
+    "generate-icons-enums": "node scripts/extract-icons-enums.js",
+    "generate-icons-classes": "node scripts/extract-icons-classes.js",
+    "generate-icons-types": "npm run generate-icons-enums && npm run generate-icons-classes",
     "prepare": "husky",
     "release": "release-it"
   },

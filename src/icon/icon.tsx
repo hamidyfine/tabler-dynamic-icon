@@ -3,13 +3,14 @@ import './icon.style.scss';
 import type { IconProps as IconPropsTabler, TablerIcon } from '@tabler/icons-react';
 import { lazy, Suspense } from 'react';
 
-import type { IconsName } from './icon.type';
+import type { IconClasses } from './icon.classes';
+import type { IconsName } from './icon.enums';
 
 interface IconProps extends Omit<IconPropsTabler, 'size'> {
     animation?: 'spin';
-    cls?: string; // Icon CSS Class
+    cls?: IconClasses; // Icon CSS Class
     icon?: TablerIcon; // Icon Component
-    name?: string | keyof typeof IconsName; // Icon Name
+    name?: keyof typeof IconsName; // Icon Name
     size?: number;
     stroke?: number;
 }
@@ -77,7 +78,7 @@ export const Icon = ({
     }
 
     // If IconName is provided
-    if (IconName && !IconComponent) {
+    if (IconName) {
         const LazyIcon = lazy(() =>
             import('@tabler/icons-react').then(module => ({
                 default: module[IconName as keyof typeof module] as TablerIcon,
