@@ -10,7 +10,7 @@ import { peerDependencies } from './package.json';
 
 export default defineConfig({
     build: {
-        cssCodeSplit: true,
+        cssCodeSplit: false,
         lib: {
             cssFileName: 'style',
             entry: resolve(__dirname, join('src', 'index.ts')),
