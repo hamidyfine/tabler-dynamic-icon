@@ -1,7 +1,7 @@
 import './icon.style.scss';
 
 import type { IconProps as IconPropsTabler, TablerIcon } from '@tabler/icons-react';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 
 import type { IconClasses } from './icon.classes';
 import type { IconsName } from './icon.enums';
@@ -26,6 +26,21 @@ const IconFallback = ({ size }: { size: number|string }) => (
         }}
     />
 );
+
+const lazyCache = new Map<string, React.ComponentType<any>>();
+
+function getLazyIcon(name: string) {
+    let Comp = lazyCache.get(name);
+    if (!Comp) {
+        Comp = lazy(() =>
+            import('@tabler/icons-react').then((m) => ({
+                default: m[name as keyof typeof m] as TablerIcon,
+            })),
+        );
+        lazyCache.set(name, Comp);
+    }
+    return Comp;
+}
 
 export const Icon = ({
     animation,
@@ -79,11 +94,7 @@ export const Icon = ({
 
     // If IconName is provided
     if (IconName) {
-        const LazyIcon = lazy(() =>
-            import('@tabler/icons-react').then(module => ({
-                default: module[IconName as keyof typeof module] as TablerIcon,
-            })),
-        );
+        const LazyIcon = useMemo(() => getLazyIcon(String(IconName)), [IconName]);
 
         return (
             <Suspense fallback={<IconFallback size={size} />}>
