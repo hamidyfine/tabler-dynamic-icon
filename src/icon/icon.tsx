@@ -46,7 +46,7 @@ export const Icon = ({
         ...rest_props,
     };
 
-    const icon_classes = ['icon'];
+    const icon_classes = ['icon', rest_props.className];
     if (animation) icon_classes.push(`icon__animate--${animation}`);
 
     // If IconCssClass is Provided
