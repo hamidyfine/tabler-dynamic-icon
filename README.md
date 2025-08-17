@@ -25,7 +25,14 @@ yarn add tabler-dynamic-icon @tabler/icons-react @tabler/icons-webfont
 
 > If you **don’t** want to use webfonts at all, you can **skip** `@tabler/icons-webfont`.
 
----
+## Style Import (Required)
+
+This package ships with a base stylesheet.
+You **must** import it once in your app:
+
+```ts
+import 'tabler-dynamic-icon/style';
+```
 
 ## Webfont (optional)
 
@@ -123,6 +130,47 @@ Both `cls` and `name` props are **fully type-safe**. This ensures you’ll get a
 ```ts
 <Icon name="IconAlarm" />
 <Icon cls="alarm" />
+```
+
+---
+
+## Using Types and Classes
+
+This package exports **typed helpers** so you can work with icons more easily:
+
+### `IconsClassName` (all class names)
+
+An array of all available **webfont class names**:
+
+```ts
+import { IconsClassName } from 'tabler-dynamic-icon/classes';
+
+for (const cls of IconsClassName) {
+  console.log(cls); // "alarm", "123", "calendar", ...
+}
+```
+
+### `IconsCls` (the `cls` prop type)
+
+The type-safe string literal union of all valid `cls` values:
+
+```ts
+import type { IconsCls } from 'tabler-dynamic-icon/classes';
+
+const valid: IconsCls = 'alarm';   // ✅
+const invalid: IconsCls = 'wrong'; // ❌ TS error
+```
+
+### `IconsName` (enum of component names)
+
+Enum of all available React component icon names from `@tabler/icons-react`:
+
+```ts
+import { IconsName } from 'tabler-dynamic-icon/enums';
+
+const name: IconsName = IconsName.IconAlarm;
+
+<Icon name={IconsName.IconBell} size={20} />;
 ```
 
 ---
