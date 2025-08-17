@@ -58,8 +58,8 @@ importers:
         specifier: ^9.33.0
         version: 9.33.0(jiti@2.5.1)
       eslint-config-reactify:
-        specifier: ^1.1.3
-        version: 1.1.3(@testing-library/dom@10.4.1)(eslint@9.33.0(jiti@2.5.1))(jest@30.0.5(@types/node@24.3.0)(esbuild-register@3.6.0(esbuild@0.25.8)))
+        specifier: ^1.1.5
+        version: 1.1.5(@testing-library/dom@10.4.1)(eslint@9.33.0(jiti@2.5.1))(jest@30.0.5(@types/node@24.3.0)(esbuild-register@3.6.0(esbuild@0.25.8)))
       eslint-plugin-storybook:
         specifier: ^9.1.2
         version: 9.1.2(eslint@9.33.0(jiti@2.5.1))(storybook@9.1.2(@testing-library/dom@10.4.1)(vite@7.1.2(@types/node@24.3.0)(jiti@2.5.1)(sass-embedded@1.90.0)(sass@1.90.0)(sugarss@5.0.1(postcss@8.5.6))(yaml@2.8.1)))(typescript@5.9.2)
@@ -2464,8 +2464,8 @@ packages:
     engines: {node: '>=6.0'}
     hasBin: true
 
-  eslint-config-reactify@1.1.3:
-    resolution: {integrity: sha512-5QgKE+NbGKwKJIOGhG6tli+RJyCfrEUjmi8QGuJdudBy1VlWN131iGmRVsa+BL5MRFbIEkJMhCUEMeoz5thqdg==}
+  eslint-config-reactify@1.1.5:
+    resolution: {integrity: sha512-qSAH+9sddpT1t2GBuZfsg0Wf/TDQ3wjsRLFIddWTlImEazezaK8TWBmAR4+8ISQtYQFRh5K12h5RYvifus1N+w==}
     peerDependencies:
       eslint: ^9.32.0
 
@@ -7513,7 +7513,7 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-reactify@1.1.3(@testing-library/dom@10.4.1)(eslint@9.33.0(jiti@2.5.1))(jest@30.0.5(@types/node@24.3.0)(esbuild-register@3.6.0(esbuild@0.25.8))):
+  eslint-config-reactify@1.1.5(@testing-library/dom@10.4.1)(eslint@9.33.0(jiti@2.5.1))(jest@30.0.5(@types/node@24.3.0)(esbuild-register@3.6.0(esbuild@0.25.8))):
     dependencies:
       '@eslint/js': 9.33.0
       '@stylistic/eslint-plugin': 5.2.2(eslint@9.33.0(jiti@2.5.1))

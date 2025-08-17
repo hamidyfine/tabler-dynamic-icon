@@ -1,6 +1,6 @@
 // Auto-generated from @tabler/icons-webfont — do not edit by hand
 
-export const Icon_Classes_Array = [
+export const IconsClassName = [
     '12-hours',
     '123',
     '24-hours',
@@ -6004,4 +6004,4 @@ export const Icon_Classes_Array = [
     'zzz-off'
 ] as const;
 
-export type IconClasses = typeof Icon_Classes_Array[number];
+export type IconsCls = typeof IconsClassName[number];

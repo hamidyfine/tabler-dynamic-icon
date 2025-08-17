@@ -30,19 +30,19 @@ async function main() {
 
     // WRITE
     await fs.mkdir(OUT_DIR, { recursive: true });
-    const classesType = toType('IconClasses', 'Icon_Classes_Array', results);
+    const classesType = toType('IconsClassName', results);
     await fs.writeFile(OUT_FILE, classesType, 'utf8');
 
     console.log(`✅ Generated ${OUT_FILE} with ${results.length} icons.`);
 }
 
-function toType(typeName, arrayName, names) {
+function toType(typeName, names) {
     const header = '// Auto-generated from @tabler/icons-webfont — do not edit by hand\n';
     const typeDef =
-    `export const ${arrayName} = [\n` +
+    `export const ${typeName} = [\n` +
     names.map((n) => `    '${n}'`).join(',\n') +
     '\n] as const;\n\n' +
-    `export type ${typeName} = typeof ${arrayName}[number];`;
+    `export type IconsCls = typeof ${typeName}[number];`;
     return header + '\n' + typeDef;
 }
 
