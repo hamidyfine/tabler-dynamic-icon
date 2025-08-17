@@ -30,20 +30,21 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     },
     "./classes": {
+      "types": "./dist/icon/icon.classes.d.ts",
       "import": "./dist/icon/icon.classes.js",
-      "require": "./dist/icon/icon.classes.cjs",
-      "types": "./dist/icon/icon.classes.d.ts"
+      "require": "./dist/icon/icon.classes.cjs"
     },
     "./enums": {
+      "types": "./dist/icon/icon.enums.d.ts",
       "import": "./dist/icon/icon.enums.js",
-      "require": "./dist/icon/icon.enums.cjs",
-      "types": "./dist/icon/icon.enums.d.ts"
-    }
+      "require": "./dist/icon/icon.enums.cjs"
+    },
+    "./style": "./src/icon/icon.style.scss"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",

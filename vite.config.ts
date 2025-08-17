@@ -3,14 +3,14 @@ import { join, resolve } from 'node:path';
 
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
+// import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import dts from 'vite-plugin-dts';
 
 import { peerDependencies } from './package.json';
 
 export default defineConfig({
     build: {
-        cssCodeSplit: false,
+        cssCodeSplit: true,
         lib: {
             cssFileName: 'style',
             entry: {
@@ -18,7 +18,7 @@ export default defineConfig({
                 'icon/icon.enums': resolve(__dirname, join('src', 'icon', 'icon.enums.ts')),
                 index: resolve(__dirname, join('src', 'index.ts')),
             },
-            fileName: (_format, entryName) => entryName,
+            fileName: (_format, entryName) => `${entryName}${_format === 'es' ? '.js' : '.cjs'}`,
             formats: ['es', 'cjs'],
         },
         minify: true,
@@ -30,25 +30,8 @@ export default defineConfig({
     },
     plugins: [
         react(),
-        cssInjectedByJsPlugin(),
-        dts({
-            entryRoot: 'src',
-            exclude: [
-                'src/test/**',
-                'src/**/*.stories.*',
-                '**/*.spec.*',
-                '**/*.test.*',
-            ],
-            include: [
-                resolve(__dirname, 'src/index.ts'),
-                resolve(__dirname, 'src/icon/icon.classes.ts'),
-                resolve(__dirname, 'src/icon/icon.enums.ts'),
-            ],
-            insertTypesEntry: true,
-            outDir: 'dist',
-            rollupTypes: true,
-            tsconfigPath: './tsconfig.json',
-        }),
+        // cssInjectedByJsPlugin(),
+        dts({ rollupTypes: true }),
     ],
     test: {
         coverage: {
