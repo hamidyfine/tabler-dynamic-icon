@@ -13,8 +13,12 @@ export default defineConfig({
         cssCodeSplit: false,
         lib: {
             cssFileName: 'style',
-            entry: resolve(__dirname, join('src', 'index.ts')),
-            fileName: 'index',
+            entry: {
+                'icon/icon.classes': resolve(__dirname, join('src', 'icon', 'icon.classes.ts')),
+                'icon/icon.enums': resolve(__dirname, join('src', 'icon', 'icon.enums.ts')),
+                index: resolve(__dirname, join('src', 'index.ts')),
+            },
+            fileName: (_format, entryName) => entryName,
             formats: ['es', 'cjs'],
         },
         minify: true,
@@ -27,7 +31,24 @@ export default defineConfig({
     plugins: [
         react(),
         cssInjectedByJsPlugin(),
-        dts({ rollupTypes: true }), // Output .d.ts files
+        dts({
+            entryRoot: 'src',
+            exclude: [
+                'src/test/**',
+                'src/**/*.stories.*',
+                '**/*.spec.*',
+                '**/*.test.*',
+            ],
+            include: [
+                resolve(__dirname, 'src/index.ts'),
+                resolve(__dirname, 'src/icon/icon.classes.ts'),
+                resolve(__dirname, 'src/icon/icon.enums.ts'),
+            ],
+            insertTypesEntry: true,
+            outDir: 'dist',
+            rollupTypes: true,
+            tsconfigPath: './tsconfig.json',
+        }),
     ],
     test: {
         coverage: {
