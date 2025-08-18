@@ -44,9 +44,9 @@
       "import": "./dist/icon/icon.enums.js",
       "require": "./dist/icon/icon.enums.cjs"
     },
-    "./style": "./dist/index.css"
+    "./style.css": "./dist/index.css"
   },
-  "style": "./dist/style.css",
+  "style.css": "./dist/style.css",
   "scripts": {
     "dev": "storybook dev -p 6006",
     "test": "vitest run",
