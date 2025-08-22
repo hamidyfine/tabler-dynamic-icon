@@ -1,6 +1,6 @@
 # Dynamic Icon Component for Tabler-Icons
 
-A tiny React component that renders **Tabler** icons in three different ways, by **CSS class** (webfont), by **component**, or by **name** (lazy-loaded). It picks the first available option based on a clear priority order.
+A tiny React component that renders **Tabler** icons in three different ways, by **CSS class** (webfont), by **component**, or by **name** (with IconsProvider). It picks the first available optio## FAQ
 
 ```tsx
 import { Icon } from 'tabler-dynamic-icon';
@@ -31,7 +31,7 @@ This package ships with a base stylesheet.
 You **must** import it once in your app:
 
 ```ts
-import 'tabler-dynamic-icon/style';
+import 'tabler-dynamic-icon/styles.css';
 ```
 
 ## Webfont (optional)
@@ -39,7 +39,7 @@ import 'tabler-dynamic-icon/style';
 If you choose to use the webfont (for the `cls` prop), import one of the CSS files in your app:
 
 ```ts
-// minimal bundle
+// All Icons Bundle
 import '@tabler/icons-webfont/dist/tabler-icons.min.css';
 
 // OR choose a specific weight+style bundle:
@@ -57,7 +57,7 @@ The component supports **three** input styles. Provide **at least one** of the f
 
 * `cls`  → renders a **webfont** icon by CSS class (e.g. `"alarm"`)
 * `icon` → renders a **React component** (e.g. `IconAlarm`)
-* `name` → renders a **lazy-loaded** icon by its exported name from `@tabler/icons-react` (e.g. `"IconAlarm"`)
+* `name` → renders an icon by its exported name from `@tabler/icons-react` using **IconsProvider** (e.g. `"IconAlarm"`)
 
 ### Priority
 
@@ -86,11 +86,19 @@ import { IconAlarm } from '@tabler/icons-react';
 <Icon icon={IconAlarm} size={24} stroke={2} />
 ```
 
-### 3) Lazy by exported `name`
+### 3) By `name` with IconsProvider
 
 ```tsx
-<Icon name="IconAlarm" size={24} stroke={1.5} />
-// Dynamically imports @tabler/icons-react and renders `module["IconAlarm"]`
+import { IconsProvider } from 'tabler-dynamic-icon';
+import * as TablerIcons from '@tabler/icons-react';
+
+function App() {
+  return (
+    <IconsProvider icons={TablerIcons}>
+      <Icon name="IconAlarm" size={24} stroke={1.5} />
+    </IconsProvider>
+  );
+}
 ```
 
 ---
@@ -100,9 +108,9 @@ import { IconAlarm } from '@tabler/icons-react';
 | Prop                   | Type                                 | Default | Description                                                                                                                       | Example                                     |
 | ---------------------- | ------------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `animation`            | `'spin'`                             | —       | Adds an animation to the icon.                                   | `<Icon cls="loader" animation="spin" />`    |
-| `cls`                  | `IconClasses`                             | —       | **Webfont** class suffix. Prepends `ti ti-` to the value and renders it using Tabler webfont. Requires importing the webfont CSS. | `cls="alarm"` → `<i class="ti ti-alarm" />` |
+| `cls`                  | `IconsCls`                           | —       | **Webfont** class suffix. Prepends `ti ti-` to the value and renders it using Tabler webfont. Requires importing the webfont CSS. | `cls="alarm"` → `<i class="ti ti-alarm" />` |
 | `icon`                 | `TablerIcon`                         | —       | A Tabler React icon component imported directly from `@tabler/icons-react`.                                                       | `icon={IconAlarm}`                          |
-| `name`                 | `keyof typeof IconsName` | —       | The export name of an icon from `@tabler/icons-react`. The icon is lazy-loaded via `React.lazy`.                                  | `name="IconAlarm"`                          |
+| `name`                 | `keyof typeof IconsName`             | —       | The export name of an icon from `@tabler/icons-react`. Requires wrapping your app with `IconsProvider`.                           | `name="IconAlarm"`                          |
 | `size`                 | `number`                             | `18`    | Icon size in pixels. Applies to all rendering modes.                                                                              | `size={24}`                                 |
 | `stroke`               | `number`                             | `1.5`   | Stroke width for SVG icons (applies to `icon` and `name` modes).                                                                  | `stroke={2}`                                |
 | *(other Tabler props)* | Various                              | —       | Any other props supported by `@tabler/icons-react` (e.g. `color`, `className`).                                                   | `color="red"`                               |
@@ -110,7 +118,52 @@ import { IconAlarm } from '@tabler/icons-react';
 ### Notes
 
 * **At least one** of `cls`, `icon`, or `name` must be provided; otherwise the component returns `null`.
-* `name` uses `React.lazy` under the hood and is wrapped in an internal `Suspense` with a small blank fallback box that matches the requested size.
+* `name` requires your app to be wrapped with `IconsProvider` and the icons object passed to it.
+* When using `name` without `IconsProvider`, a warning will be logged and the component returns `null`.
+
+---
+
+## IconsProvider
+
+When using the `name` prop, you need to wrap your application with `IconsProvider` and pass the icons object:
+
+```tsx
+import { IconsProvider } from 'tabler-dynamic-icon';
+import * as TablerIcons from '@tabler/icons-react';
+
+function App() {
+  return (
+    <IconsProvider icons={TablerIcons}>
+      {/* Your app components */}
+      <Icon name="IconAlarm" size={20} />
+      <Icon name="IconBell" size={24} />
+    </IconsProvider>
+  );
+}
+```
+
+### IconsProvider Props
+
+| Prop    | Type  | Description                                           |
+|---------|-------|-------------------------------------------------------|
+| `icons` | `any` | The icons object, typically imported from `@tabler/icons-react` |
+
+### useIconsRegistry Hook
+
+You can also use the `useIconsRegistry` hook to access the icons context directly:
+
+```tsx
+import { useIconsRegistry } from 'tabler-dynamic-icon';
+
+function MyComponent() {
+  const { icons } = useIconsRegistry();
+  
+  // Use icons object directly
+  const IconAlarm = icons?.IconAlarm;
+  
+  return IconAlarm ? <IconAlarm size={20} /> : null;
+}
+```
 
 ---
 
@@ -143,7 +196,7 @@ This package exports **typed helpers** so you can work with icons more easily:
 An array of all available **webfont class names**:
 
 ```ts
-import { IconsClassName } from 'tabler-dynamic-icon/classes';
+import { IconsClassName } from 'tabler-dynamic-icon';
 
 for (const cls of IconsClassName) {
   console.log(cls); // "alarm", "123", "calendar", ...
@@ -155,7 +208,7 @@ for (const cls of IconsClassName) {
 The type-safe string literal union of all valid `cls` values:
 
 ```ts
-import type { IconsCls } from 'tabler-dynamic-icon/classes';
+import type { IconsCls } from 'tabler-dynamic-icon';
 
 const valid: IconsCls = 'alarm';   // ✅
 const invalid: IconsCls = 'wrong'; // ❌ TS error
@@ -166,7 +219,7 @@ const invalid: IconsCls = 'wrong'; // ❌ TS error
 Enum of all available React component icon names from `@tabler/icons-react`:
 
 ```ts
-import { IconsName } from 'tabler-dynamic-icon/enums';
+import { IconsName } from 'tabler-dynamic-icon';
 
 const name: IconsName = IconsName.IconAlarm;
 
@@ -185,8 +238,8 @@ const name: IconsName = IconsName.IconAlarm;
 
 ## FAQ
 
-**Do I need to add a `<Suspense>` around `<Icon />`?**
-No—`Icon` already wraps the lazy import with an internal `Suspense` and a minimal fallback.
+**Do I need to wrap my app with IconsProvider?**
+Only if you want to use the `name` prop. For `cls` and `icon` props, no provider is needed.
 
 **Can I avoid shipping the webfont?**
 Yes. Skip `@tabler/icons-webfont` and don’t use the `cls` prop. Use `icon` or `name` instead.
@@ -203,24 +256,26 @@ Yes. Skip `@tabler/icons-webfont` and don’t use the `cls` prop. Use `icon` or 
 
 ```tsx
 import '@tabler/icons-webfont/dist/tabler-icons.min.css';
-import { Icon } from 'tabler-dynamic-icon';
+import 'tabler-dynamic-icon/styles.css';
+import { Icon, IconsProvider } from 'tabler-dynamic-icon';
 import { IconHeart } from '@tabler/icons-react';
+import * as TablerIcons from '@tabler/icons-react';
 
 export default function Demo() {
   return (
-    <>
+    <IconsProvider icons={TablerIcons}>
       {/* webfont */}
       <Icon cls="alarm" size={20} />
 
       {/* direct component */}
       <Icon icon={IconHeart} size={24} stroke={2} />
 
-      {/* lazy name */}
+      {/* using name with provider */}
       <Icon name="IconBell" size={28} />
 
       {/* with animation */}
       <Icon cls="loader" animation="spin" size={18} />
-    </>
+    </IconsProvider>
   );
 }
 ```

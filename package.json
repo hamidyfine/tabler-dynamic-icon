@@ -18,41 +18,29 @@
     "icons"
   ],
   "type": "module",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "sideEffects": [
-    "*.css",
-    "**/*.css"
-  ],
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
     },
-    "./classes": {
-      "types": "./dist/icon/icon.classes.d.ts",
-      "import": "./dist/icon/icon.classes.js",
-      "require": "./dist/icon/icon.classes.cjs"
-    },
-    "./enums": {
-      "types": "./dist/icon/icon.enums.d.ts",
-      "import": "./dist/icon/icon.enums.js",
-      "require": "./dist/icon/icon.enums.cjs"
-    },
-    "./style.css": "./dist/index.css"
+    "./styles.css": "./dist/styles.css"
   },
   "style.css": "./dist/style.css",
+  "sideEffects": [
+    "*/*.css",
+    "*/*.scss",
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "build:storybook": "storybook build",
-    "build": "tsc && vite build",
+    "build": "rm -rf dist && rollup -c",
     "lint": "npm run lint:scripts && npm run lint:styles",
     "lint:scripts": "eslint . --report-unused-disable-directives --max-warnings 0 --no-warn-ignored --fix",
     "lint:styles": "stylelint src/**/*.scss",
@@ -62,10 +50,17 @@
     "prepare": "husky",
     "release": "release-it"
   },
+  "peerDependencies": {
+    "@tabler/icons-react": "^3.34.1",
+    "@tabler/icons-webfont": "^3.34.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
   "devDependencies": {
-    "@storybook/builder-vite": "^9.1.2",
-    "@storybook/react": "^9.1.2",
-    "@storybook/react-vite": "^9.1.2",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@tabler/icons-webfont": "^3.34.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.7.0",
     "@testing-library/react": "^16.3.0",
@@ -74,41 +69,34 @@
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.1",
     "@vitejs/plugin-react-swc": "^4.0.0",
     "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.33.0",
-    "eslint-config-reactify": "^1.1.5",
-    "eslint-plugin-storybook": "^9.1.2",
+    "eslint-config-reactify": "^1.1.6",
     "husky": "^9.1.7",
     "jest": "^30.0.5",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.1.5",
-    "postcss": "^8.5.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "release-it": "^19.0.4",
+    "rollup": "^4.47.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-scss": "^4.0.1",
     "sass-embedded": "^1.90.0",
-    "storybook": "^9.1.2",
     "stylelint": "^16.23.1",
     "stylelint-config-hudochenkov": "^12.0.0",
     "stylelint-config-sass-guidelines": "^12.1.0",
     "stylelint-config-standard-scss": "^15.0.1",
     "stylelint-order": "^7.0.0",
     "stylelint-scss": "^6.12.1",
+    "tslib": "^2.8.1",
     "typescript": "^5.9.2",
-    "vite": "^7.1.2",
-    "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@tabler/icons-react": "^3.34.1",
-    "@tabler/icons-webfont": "^3.34.1"
-  },
-  "peerDependencies": {
-    "@tabler/icons-react": "^3.34.1",
-    "@tabler/icons-webfont": "^3.34.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@tabler/icons-react": "^3.34.1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
