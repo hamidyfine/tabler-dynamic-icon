@@ -1,6 +1,7 @@
 import './icon.style.scss';
 
 import type { IconProps as IconPropsTabler } from '@tabler/icons-react';
+import type { CSSProperties } from 'react';
 
 import type { IconsCls } from './icon.classes';
 import type { IconsName } from './icon.enums';
@@ -9,19 +10,23 @@ import { useIconsRegistry } from './icon.hooks';
 interface IconProps extends Omit<IconPropsTabler, 'size'> {
     animation?: 'spin';
     cls?: IconsCls; // Icon CSS Class
+    color?: string;
     icon?: any; // Icon Component
     name?: keyof typeof IconsName; // Icon Name
     size?: number;
     stroke?: number;
+    style?: CSSProperties;
 }
 
 export const Icon = ({
     animation,
     cls: IconCssClass,
+    color,
     icon: IconComponent,
     name: IconName,
     size = 18,
     stroke = 1.5,
+    style,
     ...rest_props
 }: IconProps) => {
     const { icons } = useIconsRegistry();
@@ -51,7 +56,7 @@ export const Icon = ({
             >
                 <i
                     className={`ti ti-${IconCssClass} ${icon_classes.join(' ')}`}
-                    style={{ fontSize: size }}
+                    style={{ color, fontSize: size, ...style }}
                 />
             </div>
         );
@@ -63,6 +68,8 @@ export const Icon = ({
             <IconComponent
                 {...icon_props}
                 className={icon_classes.join(' ')}
+                color={color}
+                style={{ ...style }}
             />
         );
     }
@@ -84,6 +91,8 @@ export const Icon = ({
             <SelectedIcon
                 {...icon_props}
                 className={icon_classes.join(' ')}
+                color={color}
+                style={{ ...style }}
             />
         );
     }
