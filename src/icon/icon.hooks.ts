@@ -2,9 +2,10 @@ import { useContext } from 'react';
 
 import { IconsContext } from './icon.provider';
 
-export const useIconsRegistry = () => {
+export const useIcons = () => {
     const context = useContext(IconsContext);
-
-    // Return the context value, which will be { icons: undefined } if no provider is used
-    return context || { icons: undefined };
+    if (context === undefined) {
+        throw new Error('useIcons must be used within an IconsProvider');
+    }
+    return context;
 };

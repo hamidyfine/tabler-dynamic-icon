@@ -1,13 +1,18 @@
-import { createContext, type PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import { createContext } from 'react';
 
-export interface IconsContextValue {
-    icons?: any;
+export interface IIconsContext {
+    icons: Record<string, any>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const IconsContext = createContext<IconsContextValue>({ icons: undefined });
+export const IconsContext = createContext<IIconsContext | undefined>(undefined);
 
-export const IconsProvider = ({ children, icons }: PropsWithChildren<{ icons?: any }>) => {
+interface IIconsProviderProps extends PropsWithChildren {
+    icons: Record<string, any>;
+}
+
+export const IconsProvider = ({ children, icons }: IIconsProviderProps) => {
     return (
         <IconsContext.Provider value={{ icons }}>
             {children}
