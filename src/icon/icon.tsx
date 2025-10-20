@@ -5,7 +5,7 @@ import type { CSSProperties } from 'react';
 
 import type { IconsCls } from './icon.classes';
 import type { IconsName } from './icon.enums';
-import { useIconsRegistry } from './icon.hooks';
+import { useIcons } from './icon.hooks';
 
 interface IconProps extends Omit<IconPropsTabler, 'size'> {
     animation?: 'spin';
@@ -29,7 +29,7 @@ export const Icon = ({
     style,
     ...rest_props
 }: IconProps) => {
-    const { icons } = useIconsRegistry();
+    const { icons } = useIcons();
 
     if (!IconComponent && !IconName && !IconCssClass) {
         return null;
